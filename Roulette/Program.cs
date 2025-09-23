@@ -1,4 +1,8 @@
-﻿Console.BackgroundColor = ConsoleColor.Green;
+﻿
+//jag letade efter vissa koder vi inte har lärt oss än på internet och anände chatgbt för väldigt små errors
+//jag inte fattade när jag jobbade hemma eftersom jag inte kunda hitta så bra lössningar på internet men jag lyckades lössa dom flesta utan hjälp
+
+Console.BackgroundColor = ConsoleColor.Green;
 Console.ForegroundColor = ConsoleColor.Black;
 Console.Clear();
 Console.WriteLine("Welcome to roulette RNG");
@@ -17,7 +21,7 @@ bool Colour = false;
 
 bool Number = false;
 
-int Balance = 10000;
+int Balance = 100;
  bool shop = false;
 
 
@@ -80,112 +84,114 @@ while (isPlaying)
 
     while (Colour)
     {
-      
         Console.WriteLine("Balance:" + Balance + "$");
         Console.WriteLine("Enter = Bet again");
-        Console.WriteLine("Type Menu = Return to menu");
-        Console.WriteLine("Enter bet amount and press enter");
+        Console.WriteLine("Type Menu after your bet is done = Return to menu");
 
-        Console.WriteLine("Type Red, Black or Green and press enter");
+     
+        int BetAmount;
+        while (true)
+        {
+            Console.WriteLine("Enter bet amount and press enter:");
+            string betInput = Console.ReadLine();
 
-       
+            try
+            {
+                BetAmount = Convert.ToInt32(betInput);
 
-        int BetAmount = Convert.ToInt32(Console.ReadLine());
+                if (BetAmount > Balance)
+                {
+                    Console.WriteLine("Cheater! You can't bet more than your balance.");
+                   
+                    continue; 
+                }
+
+                break; 
+            }
+            catch
+            {
+                Console.WriteLine("Invalid input! Please enter a number.");
+            }
+        }
+
+        
+        string guess;
+        while (true)
+        {
+            Console.WriteLine("Type Red, Black or Green and press enter:");
+            guess = Console.ReadLine();
+
+            if (guess == "Red" || guess == "Black" || guess == "Green")
+            {
+                break; 
+            }
+            else
+            {
+                Console.WriteLine("Invalid colour! Try again.");
+            }
+        }
+
         int roulette = rand.Next(1, 3);
         int green = rand.Next(0, 37);
 
-        string guess = Console.ReadLine();
-
-        if (BetAmount > Balance)
-        {
-           
-            Console.WriteLine("Cheater lets try again (you bet more then on your balance)");
-            Thread.Sleep(1000);
-            Console.Clear();
-            break;
-        }
+       
         if (guess == "Red")
         {
-
             if (roulette == 1)
             {
-                Console.WriteLine(" you won!");
-                
-                Balance = Balance + BetAmount;
-                
-                if(vip == 1)
-                {
-                    Balance = Balance + BetAmount;
-                }
-                Console.WriteLine(Balance+"$");
+                Console.WriteLine("You won!");
+                Balance += BetAmount;
+                if (vip == 1) Balance += BetAmount;
+                Console.WriteLine(Balance + "$");
             }
             else
             {
-                Console.WriteLine("you lost");
-                 Balance = Balance - BetAmount;
-                Console.WriteLine(Balance +"$");
+                Console.WriteLine("You lost");
+                Balance -= BetAmount;
+                Console.WriteLine(Balance + "$");
             }
-
         }
-
         else if (guess == "Black")
         {
-
             if (roulette == 2)
             {
-                Console.WriteLine("you won!");
-                Balance = Balance + BetAmount;
-                
-                if (vip == 1)
-                {
-                    Balance = Balance + BetAmount;
-                }
+                Console.WriteLine("You won!");
+                Balance += BetAmount;
+                if (vip == 1) Balance += BetAmount;
                 Console.WriteLine(Balance + "$");
             }
             else
             {
-                Console.WriteLine("you lost");
-                Balance = Balance - BetAmount;
+                Console.WriteLine("You lost");
+                Balance -= BetAmount;
                 Console.WriteLine(Balance + "$");
             }
-
-
         }
         else if (guess == "Green")
         {
-
             if (green == 4)
             {
-                Console.WriteLine("you won!");
-                Balance = Balance + BetAmount*35;
+                Console.WriteLine("You won!");
+                Balance += BetAmount * 35;
                 Console.WriteLine(Balance + "$");
             }
             else
             {
-                Console.WriteLine("you lost");
-                Balance = Balance - BetAmount;
+                Console.WriteLine("You lost");
+                Balance -= BetAmount;
                 Console.WriteLine(Balance + "$");
             }
-
-
-        }
-        else if (guess != "Red" || guess != "Green")
-        {
-            Console.WriteLine("Not a colour");
-
-    
         }
 
         if (Console.ReadLine() == "Menu")
         {
             Number = false;
             Colour = false;
-
         }
-       Console.Clear();
 
-       
+        Console.Clear();
     }
+
 
 
 
@@ -198,7 +204,7 @@ while (isPlaying)
         Console.WriteLine("after bet type Menu = Return to menu");
         Console.WriteLine("Enter bet amount and press enter:");
         int BetAmount;
-        //jag sökte hur try och catch funkar eftersom vi inte har haft det än och jag inte visste hur jag skulle fixa detta problem
+        
         try
         {
             BetAmount = Convert.ToInt32(Console.ReadLine());
@@ -374,7 +380,7 @@ while (finish)
     Console.ForegroundColor = ConsoleColor.White;
     Console.Clear();
 
-    // jag tog hjälp av internet här för att jag villa ha en slags typing effect
+
     string text = "Congrats!";
     foreach (char c in text)
     {
