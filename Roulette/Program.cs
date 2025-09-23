@@ -17,11 +17,14 @@ bool Colour = false;
 
 bool Number = false;
 
-int Balance = 1000;
+int Balance = 10000;
  bool shop = false;
 
 
 int vip = 150;
+bool finish = false;
+
+
 
 
 
@@ -32,6 +35,7 @@ while (isPlaying)
     Console.WriteLine("Press 1 to bet on colours");
     Console.WriteLine("Press 2 to bet between 1-36");
     Console.WriteLine("Press 3 to open the shop");
+    Console.WriteLine("Press 4 to complete the game(requires 10K$)");
     Console.WriteLine("Balance:" + Balance + "$");
     
     char input = Console.ReadKey().KeyChar;
@@ -51,6 +55,21 @@ while (isPlaying)
     {
         shop = true;
         Console.Clear();
+    }
+    else if (input == '4')
+    {
+        if(Balance >= 10000)
+        {
+            finish= true;
+            isPlaying = false;
+            Console.Clear();
+        }
+        else if (Balance <= 10000)
+        {
+            Console.WriteLine("You arent worthy yet");
+            Thread.Sleep(500);
+            Console.Clear();
+        }
     }
     else
     {
@@ -79,8 +98,10 @@ while (isPlaying)
 
         if (BetAmount > Balance)
         {
-            Console.Clear();
+           
             Console.WriteLine("Cheater lets try again (you bet more then on your balance)");
+            Thread.Sleep(1000);
+            Console.Clear();
             break;
         }
         if (guess == "Red")
@@ -174,23 +195,49 @@ while (isPlaying)
     {
         Console.WriteLine("Balance:" + Balance + "$");
         Console.WriteLine("Enter = Bet again");
-        Console.WriteLine("Type Menu = Return to menu");
-        Console.WriteLine("Enter bet amount and press enter");
-        Console.WriteLine("Guess between 1-36 and press enter:");
-        int BetAmount = Convert.ToInt32(Console.ReadLine());
-        string guess = Console.ReadLine();
+        Console.WriteLine("after bet type Menu = Return to menu");
+        Console.WriteLine("Enter bet amount and press enter:");
+        int BetAmount;
+        //jag sökte hur try och catch funkar eftersom vi inte har haft det än och jag inte visste hur jag skulle fixa detta problem
+        try
+        {
+            BetAmount = Convert.ToInt32(Console.ReadLine());
+        }
+        catch
+        {
+            Console.WriteLine("use a number, press enter try again");
+            Console.ReadLine();
+            Console.Clear();
+            continue;
+        }
        
 
 
         if (BetAmount > Balance)
         {
-            Console.Clear();
+            
             Console.WriteLine("Cheater lets try again (you bet more then on your balance)");
+            Thread.Sleep(1000);
+            Console.Clear();
             break;
         }
 
         int roulette = rand.Next(0, 37);
-        int guessNumb = Convert.ToInt32(guess);
+        Console.WriteLine("Guess between 1-36 and press enter:");
+        int guessNumb;
+
+        try
+        {
+            guessNumb = Convert.ToInt32(Console.ReadLine());
+        }
+        catch
+        {
+            Console.WriteLine("use a number, press enter try again");
+            Console.ReadLine();
+            Console.Clear();
+            continue;
+        }
+
 
         if (guessNumb < 0)
         {
@@ -301,7 +348,7 @@ while (isPlaying)
             }
             else if (gambler == 2)
             {
-                Console.WriteLine("Game over goodluck next time!");
+                Console.WriteLine("Your balance was set to 0");
                 Balance = 0;
                 Thread.Sleep (1000);
                 Console.Clear();
@@ -319,6 +366,41 @@ while (isPlaying)
     }
 
 
+}
+while (finish)
+{
+    Console.Clear ();
+    Console.BackgroundColor = ConsoleColor.Black;
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.Clear();
+
+    // jag tog hjälp av internet här för att jag villa ha en slags typing effect
+    string text = "Congrats!";
+    foreach (char c in text)
+    {
+        Console.Write(c);           
+        Thread.Sleep(100);          
+    }
+    Console.WriteLine();
+    Thread.Sleep(1000);
+
+    string text2 = "You actually managed to gather 10k$, that takes some detication i respect that!";
+    foreach (char c in text2)
+    {
+        Console.Write(c);
+        Thread.Sleep(50);
+    }
+    Console.WriteLine();
+    Thread.Sleep(1000);
+    string text3 = "...The end...";
+    foreach (char c in text3)
+    {
+        Console.Write(c);
+        Thread.Sleep(300);
+    }
+    Console.WriteLine();
+    Thread.Sleep(2000);
+    break;
 }
 
 
