@@ -21,7 +21,7 @@ bool Colour = false;
 
 bool Number = false;
 
-int Balance = 100;
+int Balance = 200;
  bool shop = false;
 
 
